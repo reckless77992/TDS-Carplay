@@ -5,12 +5,12 @@ workflows:
     max_build_duration: 60
 
     integrations:
-      app_store_connect: Codemagic  # نفس الاسم اللي راح تعطيه لـ App Store Connect integration في Codemagic
+      app_store_connect: Codemagic   # نفس اسم الـ key اللي عندك
 
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.reckless77992.tdscarplay   # غيّرها لنفس الـ Bundle ID اللي حطيته في المشروع
+        bundle_identifier: com.reckless77992.tdscarplay
 
       vars:
         XCODE_PROJECT: "TDS Video.xcodeproj"
@@ -23,10 +23,7 @@ workflows:
 
       - name: Set up code signing settings on Xcode project
         script: |
-          xcode-project use-profiles \
-            --project "$CM_BUILD_DIR/$XCODE_PROJECT"
-
-
+          xcode-project use-profiles
 
       - name: Build ipa for distribution
         script: |
