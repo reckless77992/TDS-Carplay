@@ -21,7 +21,26 @@ workflows:
         script: |
           pip3 install codemagic-cli-tools
 
-      # شلّينا خطوة use-profiles اللي كانت تعطي الخطأ
+      - name: Create export options plist
+        script: |
+          cat <<EOF >/Users/builder/export_options.plist
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>compileBitcode</key>
+            <false/>
+            <key>uploadBitcode</key>
+            <false/>
+            <key>uploadSymbols</key>
+            <true/>
+            <key>signingStyle</key>
+            <string>automatic</string>
+          </dict>
+          </plist>
+          EOF
 
       - name: Build ipa for distribution
         script: |
