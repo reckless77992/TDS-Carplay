@@ -5,22 +5,12 @@ workflows:
     max_build_duration: 60
 
     integrations:
-      app_store_connect: Codemagic
+      app_store_connect: Codemagic  # تأكد إن الاسم مطابق لاسم الـ Integration في Codemagic
 
     environment:
       ios_signing:
-        # لو في Reference name للشهادة في تبويب iOS certificates حطه هنا
-        # لو تستخدم App Store Connect automatic certificates ممكن ما تحتاج هذا السطر
-        # certificates:
-        #   - Your-iOS-Distribution-Cert-Ref
-
-        provisioning_profiles:
-          - iOS TDS CarPlay              # للباندل الرئيسي com.reckless77992.tdscarplay
-          - TDSCarplayIntent-AppStore    # نفس اسم البروفايل في Codemagic
-          - TDSCarplayIntentUI-AppStore
-          - TDSScreenRec-AppStore
-          - TDSScreenRecSetupUI-AppStore
-          - TDSUploadVideo-AppStore
+        distribution_type: app_store
+        bundle_identifier: com.reckless77992.tdscarplay
 
       vars:
         XCODE_PROJECT: "TDS Video.xcodeproj"
@@ -31,10 +21,7 @@ workflows:
         script: |
           pip3 install codemagic-cli-tools
 
-      - name: Set up code signing settings on Xcode project
-        script: |
-          xcode-project use-profiles \
-            --project "$CM_BUILD_DIR/$XCODE_PROJECT"
+      # شلّينا خطوة use-profiles اللي كانت تعطي الخطأ
 
       - name: Build ipa for distribution
         script: |
