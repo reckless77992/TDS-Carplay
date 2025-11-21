@@ -1,0 +1,42 @@
+workflows:
+  ios-tds-carplay:
+    name: iOS TDS CarPlay
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    integrations:
+      app_store_connect: codemagic-key   # نفس الاسم اللي راح تعطيه لـ App Store Connect integration في Codemagic
+
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.yourname.tdscarplay   # غيّرها لنفس الـ Bundle ID اللي حطيته في المشروع
+
+      vars:
+        XCODE_PROJECT: "TDS Video.xcodeproj"
+        XCODE_SCHEME: "TDS Video"
+
+    scripts:
+      - name: Install Codemagic CLI tools
+        script: |
+          pip3 install codemagic-cli-tools
+
+      - name: Set up code signing settings on Xcode project
+        script: |
+          xcode-project use-profiles
+
+      - name: Build ipa for distribution
+        script: |
+          xcode-project build-ipa \
+            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        expire_build_submitted_for_review: true
+        submit_to_app_store: false
