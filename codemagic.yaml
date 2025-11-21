@@ -5,12 +5,14 @@ workflows:
     max_build_duration: 60
 
     integrations:
-      app_store_connect: Codemagic  # تأكد الاسم نفسه اللي في Codemagic
+      app_store_connect: Codemagic  # نفس اسم الـ integration
 
     environment:
       ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.reckless77992.tdscarplay
+        provisioning_profiles:
+          - iOS TDS Car Play        # Reference name بالضبط مثل ما هو في Codemagic
+        certificates:
+          - <YOUR_CERT_REF_NAME>    # Reference name حق الشهادة من iOS Certificates
 
       vars:
         XCODE_PROJECT: "TDS Video.xcodeproj"
@@ -41,7 +43,7 @@ workflows:
             <key>uploadSymbols</key>
             <true/>
             <key>signingStyle</key>
-            <string>automatic</string>
+            <string>manual</string>
           </dict>
           </plist>
           EOF
