@@ -10,7 +10,7 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.yourname.tdscarplay   # غيّرها لنفس الـ Bundle ID اللي حطيته في المشروع
+        bundle_identifier: com.reckless77992.tdscarplay   # غيّرها لنفس الـ Bundle ID اللي حطيته في المشروع
 
       vars:
         XCODE_PROJECT: "TDS Video.xcodeproj"
