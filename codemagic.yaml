@@ -5,7 +5,7 @@ workflows:
     max_build_duration: 60
 
     integrations:
-      app_store_connect: codemagic-key   # نفس الاسم اللي راح تعطيه لـ App Store Connect integration في Codemagic
+      app_store_connect: Codemagic  # نفس الاسم اللي راح تعطيه لـ App Store Connect integration في Codemagic
 
     environment:
       ios_signing:
